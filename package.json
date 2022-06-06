@@ -4,9 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kalph13/instagram_backend_2021.git"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://https://github.com/Kalph13/instagram_backend_2021/issues"
+  },
+  "homepage": "https://https://github.com/Kalph13/instagram_backend_2021#readme"
 }
