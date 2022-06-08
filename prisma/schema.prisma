@@ -7,9 +7,9 @@
 // (2) Invoke Prisma CLI: npx prisma
 // (3) Create Prisma Schema (schema.prisma, env.): npx prisma init
 // (4) Install PostGRE & Connect DB: Modify '.env'
-//     - Doc: https://velog.io/@ryong9rrr/Prisma-PostgreSQL-%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
+//     - Ref: https://velog.io/@ryong9rrr/Prisma-PostgreSQL-%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
 // (5) Prisma Migrate: npx prisma migrate dev --name init
-//     - Doc: https://velog.io/@ryong9rrr/Prisma-PostgreSQL-%EC%97%B0%EB%8F%99%ED%95%98%EA%B8%B0
+//     - Ref: https://velog.io/@ryong9rrr/Prisma-PostgreSQL-%EC%97%B0%EB%8F%99%ED%95%98%EA%B8%B0
 // (6) Prisma Client: npm install @prisma/client
 //     - Create Prisma Client: const client = new PrismaClient();
 //     - https://velog.io/@ryong9rrr/3.-Apollo-server-postgreSQL-%EC%97%B0%EB%8F%99%ED%95%98%EA%B8%B0-prisma-client
@@ -28,11 +28,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model movie {
-  id       Int      @id @default(autoincrement())
-  title    String
-  year     Int
-  genre    String?
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+// Prisma Tutorial
+// model movie {
+//  id       Int      @id @default(autoincrement())
+//  title    String
+//  year     Int
+//  genre    String?
+//  createAt DateTime @default(now())
+//  updateAt DateTime @updatedAt
+// }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String?
+  username  String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
 }
