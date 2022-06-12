@@ -32,18 +32,14 @@ export default {
                     }
                 });
 
-                if (createdUser) {
-                    return {
-                        createAccountSucceed: true
-                    }
-                } else {
-                    return {
-                        createAccountSucceed: false,
-                        createAccountError: "Could Not Create the User"
-                    }
-                };
+                return {
+                    createAccountSucceed: true
+                }
             } catch (e) {
-                return e;
+                return {
+                    createAccountSucceed: false,
+                    createAccountError: "Could Not Create the User"
+                }
             }
         }
     }
