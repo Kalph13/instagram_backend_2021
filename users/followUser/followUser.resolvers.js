@@ -20,6 +20,8 @@ export default {
                         connect: {
                             username
                         }
+                        /* Connect: Connects a Record to an Existing Related Record */
+                        /* Doc: https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#connect */
                     }
                 }
             })

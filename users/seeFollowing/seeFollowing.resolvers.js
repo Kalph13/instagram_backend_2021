@@ -6,6 +6,8 @@ export default {
             const checkUsername = await client.user.findUnique({
                 where: { username },
                 select: { id: true }
+                /* Select: Return a Limited Subset of Fields */
+                /* Doc: https://www.prisma.io/docs/concepts/components/prisma-client/select-fields */ 
             });
             
             if (!checkUsername) {
@@ -21,8 +23,12 @@ export default {
                 .findUnique({ where: { username } })
                 .following({
                     skip: lastID ? 1 : 0,
+                    /* 1: Skip the Cursor */
+                    /* 2: Don't Skip the Cursor (In this Case, Start From the Beginning) */
                     take: followingPerPage,
+                    /* Pagination: https://www.prisma.io/docs/concepts/components/prisma-client/pagination#offset-pagination */
                     ...(lastID && { cursor: { id: lastID } })
+                    /* Cursor: Return a Limited Set of Result Before or After a Given Cursor */
                 });
             
             return {

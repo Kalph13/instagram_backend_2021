@@ -6,6 +6,8 @@ export default {
             const checkUsername = await client.user.findUnique({
                 where: { username },
                 select: { id: true }
+                /* Select: Return a Limited Subset of Fields */
+                /* Doc: https://www.prisma.io/docs/concepts/components/prisma-client/select-fields */ 
             });
             
             if (!checkUsername) {
@@ -22,10 +24,12 @@ export default {
                 .followers({
                     skip: (page - 1) * followersPerPage,
                     take: followersPerPage
+                    /* Pagination: https://www.prisma.io/docs/concepts/components/prisma-client/pagination#offset-pagination */
                 });
             
             const totalFollowers = await client.user.count({
                 where: { following: { some: { username } } }
+                /* Some: Returns All Records Where At Least One Releated Record Matches Filtering Criteria */
             });
 
             return {
