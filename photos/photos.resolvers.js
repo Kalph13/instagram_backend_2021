@@ -2,6 +2,8 @@ import client from "../client";
 
 export default {
     Photo: {
+        /* @relations Values (user, hashtags and likes) Appear in Prisma but Don't Appear in GraphQL Query */
+        /* Below Codes Enable GraphQL to Get @relations Value */
         user: ({ userID }) => {
             return client.user.findUnique({
                 where: {
@@ -19,6 +21,23 @@ export default {
                     }
                 }
             })
+        },
+        likes: ({ id }) => {
+            return client.like.count({
+                where: {
+                    photoID: id
+                }
+            });
+            /* Guess This Also Works */
+            /* return client.photo.count({
+                where: {
+                    likes: {
+                        some: {
+                            photoID: id
+                        }
+                    }
+                }
+            }); */
         }
     },
     Hashtag: {

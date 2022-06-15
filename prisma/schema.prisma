@@ -50,6 +50,7 @@ model User {
   avatar    String?
   // Relation Fields (photos, followers, following) Don't Exist in the DB
   photos    Photo[]
+  likes     Like[]
   // Many-to-Many Self-relation (https://www.prisma.io/docs/concepts/components/prisma-schema/relations/self-relations)
   // Must Define Attribute ("FollowRelation")
   followers User[]   @relation("FollowRelation", references: [id])
@@ -68,6 +69,7 @@ model Photo {
   file      String
   caption   String?
   hashtags  Hashtag[]
+  likes     Like[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -78,4 +80,19 @@ model Hashtag {
   photos    Photo[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  photo     Photo    @relation(fields: [photoID], references: [id])
+  photoID   Int
+  user      User     @relation(fields: [userID], references: [id])
+  userID    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // @unique: Define a Unique Constraint for This Field
+  // @@unique: Define a Unique 'Compound' Constraint for the Specified Fields
+  // A Certain User Can Like a Certain Photo Only Once //
+  @@unique([photoID, userID])
 }
