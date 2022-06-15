@@ -2,6 +2,13 @@ import client from "../client"
 
 export default {
     User: {
+        photos: ({ id }) => {
+            return client.user.findUnique({
+                where: {
+                    id
+                }
+            }).photos();
+        },
         totalFollowing: ({ id }) => {
             return client.user.count({
                 where: {
@@ -11,7 +18,7 @@ export default {
                         }
                     }
                 }
-            })
+            });
         },
         totalFollowers: ({ id }) => {
             return client.user.count({
@@ -22,7 +29,7 @@ export default {
                         }
                     }
                 }
-            })
+            });
         },
         isMe: ({ id }, _, { loggedInUser }) => {
             if (!loggedInUser) {

@@ -2,10 +2,10 @@ import client from "../../client";
 
 export default {
     Query: {
-        seeHashtag: (_, { hashtag }) => {
+        seeHashtag: (_, { tag }) => {
             return client.hashtag.findUnique({
                 where: {
-                    hashtag: hashtag
+                    tag: tag
                 }
             })
         }

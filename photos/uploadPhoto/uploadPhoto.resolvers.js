@@ -1,5 +1,6 @@
 import client from "../../client"
 import { protectResolver } from "../../users/users.utils";
+import { extractHashtags } from "../photos.utils";
 
 export default {
     Mutation: {
@@ -8,15 +9,11 @@ export default {
             
             /* Parse Caption and Get or Create Hashtags */
             if (caption) {
-                const hashtags = caption.match(/#[\w]+/g);
-                hashtagObj = hashtags.map(hashtag => ({
-                    where: { hashtag },
-                    create: { hashtag }
-                }));
+                hashtagObj = extractHashtags(caption);
             }
 
             /* Save the Photo with the Parsed Hashtags */
-            return client.photo.create({
+            return await client.photo.create({
                 data: {
                     file,
                     caption,
@@ -26,7 +23,7 @@ export default {
                         }
                     },
                     ...(hashtagObj.length > 0 && {
-                        hashtag: {
+                        hashtags: {
                             connectOrCreate: hashtagObj
                         }
                     })

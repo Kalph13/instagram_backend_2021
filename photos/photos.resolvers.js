@@ -23,22 +23,23 @@ export default {
     },
     Hashtag: {
         photos: ({ id }, { page }, { loggedInUser }) => {
+            /* id: id of the Input Hashtag */
             return client.hashtag.findUnique({
                 where: {
                     id: id
                 }
-            })
+            }).photos();
         },
         totalPhotos: ({ id }) => {
             return client.photo.count({
                 where: {
-                    hashtag: {
+                    hashtags: {
                         some: {
                             id: id
                         }
                     }
                 }
-            })
+            });
         }
     }
 }
