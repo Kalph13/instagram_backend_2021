@@ -42,12 +42,14 @@ export default {
     },
     Hashtag: {
         photos: ({ id }, { page }, { loggedInUser }) => {
-            /* id: id of the Input Hashtag */
+            /* id: id of the Hashtag */
             return client.hashtag.findUnique({
                 where: {
                     id: id
                 }
             }).photos();
+            /* 'photos' Returns Null Because It's @relation */
+            /* This Forces 'photo' to Return Value (Not an Iterative Function) */
         },
         totalPhotos: ({ id }) => {
             return client.photo.count({

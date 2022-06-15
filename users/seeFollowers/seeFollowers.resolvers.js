@@ -6,10 +6,10 @@ export default {
             const checkUsername = await client.user.findUnique({
                 where: { username },
                 select: { id: true }
-                /* Select: Return a Limited Subset of Fields */
-                /* Doc: https://www.prisma.io/docs/concepts/components/prisma-client/select-fields */ 
+                /* Select: Return a Limited Subset of Fields (Returns Only 'id' of the username in this Case) */
+                /* - Doc: https://www.prisma.io/docs/concepts/components/prisma-client/select-fields */ 
             });
-            
+
             if (!checkUsername) {
                 return {
                     SeeFollowersSucceed: false,

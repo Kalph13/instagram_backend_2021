@@ -22,6 +22,7 @@ export default {
             /* userID: ID of the User Who Liked the Photo */
             const likeIDs = {
                 /* The Name Matters: Must be 'photoID_userID' */
+                /* In schema.prisma: @@unique([photoID, userID]) */
                 /* In migration.sql: CREATE UNIQUE INDEX "Like_photoID_userID_key" ON "Like"("photoID", "userID") */
                 photoID_userID: {
                     photoID: id,

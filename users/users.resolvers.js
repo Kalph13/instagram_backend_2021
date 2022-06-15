@@ -2,12 +2,14 @@ import client from "../client"
 
 export default {
     User: {
-        photos: ({ id }) => {
+        photos: async ({ id }) => {
             return client.user.findUnique({
                 where: {
                     id
                 }
             }).photos();
+            /* 'photos' Returns Null Because It's @relation */
+            /* This Forces 'photo' to Return Value (Not an Iterative Function) */
         },
         totalFollowing: ({ id }) => {
             return client.user.count({
