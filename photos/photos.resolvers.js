@@ -38,6 +38,19 @@ export default {
                     }
                 }
             }); */
+        },
+        comments: ({ id }) => {
+            return client.comment.count({
+                where: {
+                    photoID: id
+                }
+            });
+        },
+        isMine: ({ userID }, _, { loggedInUser }) => {
+            if (!loggedInUser) {
+                return false;
+            }
+            return userID === loggedInUser.id;
         }
     },
     Hashtag: {

@@ -40,23 +40,24 @@ datasource db {
 
 // Relations (https://www.prisma.io/docs/concepts/components/prisma-schema/relations)
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   firstName String
   lastName  String?
-  username  String   @unique
-  email     String   @unique
+  username  String    @unique
+  email     String    @unique
   password  String
   bio       String?
   avatar    String?
   // Relation Fields (photos, followers, following) Don't Exist in the DB
   photos    Photo[]
   likes     Like[]
+  comments  Comment[]
   // Many-to-Many Self-relation (https://www.prisma.io/docs/concepts/components/prisma-schema/relations/self-relations)
   // Must Define Attribute ("FollowRelation")
-  followers User[]   @relation("FollowRelation", references: [id])
-  following User[]   @relation("FollowRelation", references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  followers User[]    @relation("FollowRelation", references: [id])
+  following User[]    @relation("FollowRelation", references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // One-to-Many Relations (https://www.prisma.io/docs/concepts/components/prisma-schema/relations/one-to-many-relations)
@@ -64,12 +65,13 @@ model Photo {
   id        Int       @id @default(autoincrement())
   // Relation Fields (user, userID) Don't Exist in the DB
   // 'userID' References the 'id' of User (Connect Photo 'userID' - User 'id' )
-  user      User      @relation(fields: [userID], references: [id])
+  user      User?     @relation(fields: [userID], references: [id], onDelete: SetNull)
   userID    Int
   file      String
   caption   String?
   hashtags  Hashtag[]
   likes     Like[]
+  comments  Comment[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -84,10 +86,10 @@ model Hashtag {
 
 model Like {
   id        Int      @id @default(autoincrement())
-  photo     Photo    @relation(fields: [photoID], references: [id])
-  photoID   Int
-  user      User     @relation(fields: [userID], references: [id])
-  userID    Int
+  photo     Photo?   @relation(fields: [photoID], references: [id], onDelete: SetNull)
+  photoID   Int?
+  user      User?    @relation(fields: [userID], references: [id], onDelete: SetNull)
+  userID    Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -95,4 +97,15 @@ model Like {
   // @@unique: Define a Unique 'Compound' Constraint for the Specified Fields
   // A Certain User Can Like a Certain Photo Only Once //
   @@unique([photoID, userID])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  payload   String
+  user      User?    @relation(fields: [userID], references: [id], onDelete: SetNull)
+  userID    Int?
+  photo     Photo?   @relation(fields: [photoID], references: [id], onDelete: SetNull)
+  photoID   Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
