@@ -1,5 +1,7 @@
 import client from "../../client";
 import { protectResolver } from "../../users/users.utils";
+import pubsub from "../../pubsub";
+import { NEW_MESSAGE } from "../../constants";
 
 export default {
     Mutation: {
@@ -52,7 +54,7 @@ export default {
                 }
             }
 
-            await client.message.create({
+           const newMessage = await client.message.create({
                 data: {
                     payload,
                     user: {
@@ -65,6 +67,13 @@ export default {
                             id: room.id
                         }
                     }
+                }
+            });
+
+            /* Publishing Events: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#publishing-an-event */
+            pubsub.publish(NEW_MESSAGE, { 
+                roomUpdate: {
+                    ...newMessage
                 }
             });
 
