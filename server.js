@@ -38,11 +38,46 @@ const startServer = async () => {
         path: '/graphql'
     });
 
-    const serverCleanup = useServer({ schema }, wsServer);
+    /* Context Setting For Subscription: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#operation-context */
+    const serverCleanup = useServer(
+        {
+            schema,
+            /* Context to Subscription, Not GraphQL Resolvers */
+            context: async (ctx, msg, args) => {
+                if (ctx.connectionParams.Authorization) {
+                    return {
+                        loggedInUser: await getUser(ctx.connectionParams.Authorization)
+                    };
+                }
+
+                return {
+                    loggedInUser: null
+                }
+            }, 
+            /* onConnect and onDisconnect: Configure Subscription Server's Behavior When a Client Connects or Disconnects */
+            /* - Doc: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#onconnect-and-ondisconnect */
+            onConnect: async (ctx) => {
+                if (!ctx.connectionParams.Authorization) {
+                    throw new Error("You Can't Connect");                 
+                }
+
+                console.log("Subscription Connected");
+
+                return {
+                    loggedInUser: await getUser(ctx.connectionParams.Authorization)
+                };
+            },
+            onDisconnect: async (ctx) => {
+                console.log("Subscription Disconnected");
+            }
+        },
+        wsServer
+    );
 
     const apollo = new ApolloServer({
         resolvers,
         typeDefs,
+        /* Context to GraphQL Resolvers */
         context: async ({ req }) => {
             /* Authentication (Server): https://www.apollographql.com/docs/apollo-server/security/authentication */
             /* Authentication (Client): https://www.apollographql.com/docs/react/networking/authentication/ */
