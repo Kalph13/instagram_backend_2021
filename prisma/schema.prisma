@@ -52,6 +52,8 @@ model User {
   photos    Photo[]
   likes     Like[]
   comments  Comment[]
+  rooms     Room[]
+  messages  Message[]
   // Many-to-Many Self-relation (https://www.prisma.io/docs/concepts/components/prisma-schema/relations/self-relations)
   // Must Define Attribute ("FollowRelation")
   followers User[]    @relation("FollowRelation", references: [id])
@@ -66,7 +68,7 @@ model Photo {
   // Relation Fields (user, userID) Don't Exist in the DB
   // 'userID' References the 'id' of User (Connect Photo 'userID' - User 'id' )
   user      User?     @relation(fields: [userID], references: [id], onDelete: SetNull)
-  userID    Int
+  userID    Int?
   file      String
   caption   String?
   hashtags  Hashtag[]
@@ -106,6 +108,26 @@ model Comment {
   userID    Int?
   photo     Photo?   @relation(fields: [photoID], references: [id], onDelete: SetNull)
   photoID   Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Room {
+  id        Int       @id @default(autoincrement())
+  users     User[]
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  payload   String
+  user      User?    @relation(fields: [userID], references: [id], onDelete: SetNull)
+  userID    Int?
+  room      Room?    @relation(fields: [roomID], references: [id], onDelete: SetNull)
+  roomID    Int?
+  read      Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

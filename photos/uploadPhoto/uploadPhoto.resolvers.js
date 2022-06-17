@@ -1,6 +1,7 @@
 import client from "../../client"
 import { protectResolver } from "../../users/users.utils";
 import { extractHashtags } from "../photos.utils";
+import { uploadToS3 } from "../../shared/shared.utils"
 
 export default {
     Mutation: {
@@ -12,10 +13,12 @@ export default {
                 hashtagObj = extractHashtags(caption);
             }
 
+            const fileURL = await uploadToS3(file, loggedInUser.id, "uploads");
+
             /* Save the Photo with the Parsed Hashtags */
             return await client.photo.create({
                 data: {
-                    file,
+                    file: fileURL,
                     caption,
                     user: {
                         connect: {

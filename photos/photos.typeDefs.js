@@ -4,8 +4,8 @@ import { gql } from 'apollo-server';
 export default gql`
     type Photo {
         id: Int!
-        user: User!
-        userID: Int!
+        user: User
+        userID: Int
         file: String!
         caption: String
         likes: Int!
