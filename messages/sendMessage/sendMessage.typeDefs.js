@@ -3,6 +3,7 @@ import { gql } from "apollo-server";
 export default gql`
     type SendMessageResult {
         sendMessageSucceed: Boolean!
+        sendMessageID: Int
         sendMessageError: String
     }
     type Mutation {

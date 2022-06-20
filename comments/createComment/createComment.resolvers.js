@@ -27,7 +27,7 @@ export default {
                 }
             }
 
-            await client.comment.create({
+            const newComment = await client.comment.create({
                 data: {
                     payload,
                     user: {
@@ -47,7 +47,8 @@ export default {
             });
 
             return {
-                createCommentSucceed: true
+                createCommentSucceed: true,
+                createCommentID: newComment.id
             };
         })
     }

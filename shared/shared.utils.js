@@ -1,13 +1,13 @@
 import AWS from "aws-sdk";
 
-AWS.config.update({
-    credentials: {
-        accessKeyId: process.env.AWS_KEY,
-        secretAccessKey: process.env.AWS_SECRET
-    }
-})
-
 export const uploadToS3 = async (file, userID, folderName) => {
+    AWS.config.update({
+        credentials: {
+            accessKeyId: process.env.AWS_KEY,
+            secretAccessKey: process.env.AWS_SECRET
+        }
+    })
+    
     const { filename, createReadStream } = await file;
     const readStream = createReadStream();
     const newFilename = `${folderName}/${userID}-${Date.now()}-${filename}`;
@@ -19,5 +19,6 @@ export const uploadToS3 = async (file, userID, folderName) => {
             Body: readStream
         })
         .promise();
+        
     return Location;
 }

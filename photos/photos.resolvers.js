@@ -4,15 +4,15 @@ export default {
     Photo: {
         /* @relations Values (user, hashtags and likes) Appear in Prisma but Don't Appear in GraphQL Query */
         /* Below Codes Enable GraphQL to Get @relations Value */
-        user: ({ userID }) => {
-            return client.user.findUnique({
+        user: async ({ userID }) => {
+            return await client.user.findUnique({
                 where: {
                     id: userID
                 }
             })
         },
-        hashtags: ({ id }) => {
-            return client.hashtag.findMany({
+        hashtags: async ({ id }) => {
+            return await client.hashtag.findMany({
                 where: {
                     photos: {
                         some: {
@@ -22,8 +22,8 @@ export default {
                 }
             })
         },
-        likes: ({ id }) => {
-            return client.like.count({
+        likes: async ({ id }) => {
+            return await client.like.count({
                 where: {
                     photoID: id
                 }
@@ -39,8 +39,18 @@ export default {
                 }
             }); */
         },
-        comments: ({ id }) => {
-            return client.comment.count({
+        comments: async ({ id }) => {
+            return await client.comment.findMany({
+                where: {
+                    photoID: id
+                },
+                include: {
+                    user: true
+                }
+            });
+        },
+        commentsNumber: async ({ id }) => {
+            return await client.comment.count({
                 where: {
                     photoID: id
                 }
@@ -51,12 +61,35 @@ export default {
                 return false;
             }
             return userID === loggedInUser.id;
+        },
+        isLiked: async ({ id }, _, { loggedInUser }) => {
+            if (!loggedInUser) {
+                return false;
+            }
+
+            const checkLiked = await client.like.findUnique({
+                where: {
+                    photoID_userID: {
+                        photoID: id,
+                        userID: loggedInUser.id
+                    }
+                },
+                select: {
+                    id: true
+                }
+            });
+
+            if (checkLiked) {
+                return true;
+            }
+
+            return false;
         }
     },
     Hashtag: {
-        photos: ({ id }, { page }, { loggedInUser }) => {
+        photos: async ({ id }, { page }, { loggedInUser }) => {
             /* id: id of the Hashtag */
-            return client.hashtag.findUnique({
+            return await client.hashtag.findUnique({
                 where: {
                     id: id
                 }
@@ -64,8 +97,8 @@ export default {
             /* 'photos' Returns Null Because It's @relation */
             /* This Forces 'photo' to Return Value (Not an Iterative Function) */
         },
-        totalPhotos: ({ id }) => {
-            return client.photo.count({
+        totalPhotos: async ({ id }) => {
+            return await client.photo.count({
                 where: {
                     hashtags: {
                         some: {

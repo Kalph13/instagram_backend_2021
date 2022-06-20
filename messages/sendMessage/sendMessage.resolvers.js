@@ -70,6 +70,8 @@ export default {
                 }
             });
 
+            console.log("newMessage: ", newMessage);
+
             /* Publishing Events: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#publishing-an-event */
             pubsub.publish(NEW_MESSAGE, { 
                 roomUpdate: {
@@ -78,7 +80,8 @@ export default {
             });
 
             return {
-                sendMessageSucceed: true
+                sendMessageSucceed: true,
+                sendMassageID: newMessage.id
             };
         })
     }

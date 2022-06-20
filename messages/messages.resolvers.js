@@ -13,6 +13,9 @@ export default {
             return await client.message.findMany({
                 where: {
                     roomID: id
+                },
+                orderBy: {
+                    createdAt: "asc"
                 }
             })
         },

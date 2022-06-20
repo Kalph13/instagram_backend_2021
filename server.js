@@ -57,6 +57,8 @@ const startServer = async () => {
             /* onConnect and onDisconnect: Configure Subscription Server's Behavior When a Client Connects or Disconnects */
             /* - Doc: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#onconnect-and-ondisconnect */
             onConnect: async (ctx) => {
+                console.log("Login Token: ", ctx.connectionParams.Authorization);
+                
                 if (!ctx.connectionParams.Authorization) {
                     throw new Error("You Can't Connect");                 
                 }
@@ -109,7 +111,7 @@ const startServer = async () => {
     await apollo.start();
 
     app.use(graphqlUploadExpress());
-    /* app.use(morgan("tiny")); */
+    app.use(morgan("dev"));
     apollo.applyMiddleware({ app });
     app.use("/static", express.static("uploads"));
 
