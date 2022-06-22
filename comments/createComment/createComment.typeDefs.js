@@ -4,7 +4,7 @@ export default gql`
     type CreateCommentResult {
         createCommentSucceed: Boolean!
         createCommentID: Int
-        cerateCommentError: String
+        createCommentError: String
     }
     type Mutation {
         createComment(photoID: Int!, payload: String!): CreateCommentResult!
