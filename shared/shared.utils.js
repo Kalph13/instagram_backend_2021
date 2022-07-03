@@ -22,3 +22,4 @@ export const uploadToS3 = async (file, userID, folderName) => {
         
     return Location;
 }
+

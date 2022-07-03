@@ -44,6 +44,9 @@ const startServer = async () => {
             schema,
             /* Context to Subscription, Not GraphQL Resolvers */
             context: async (ctx, msg, args) => {
+                console.log("ctx", ctx);
+                console.log("msg", msg);
+                console.log("args", args);
                 if (ctx.connectionParams.Authorization) {
                     return {
                         loggedInUser: await getUser(ctx.connectionParams.Authorization)
@@ -111,9 +114,9 @@ const startServer = async () => {
     await apollo.start();
 
     app.use(graphqlUploadExpress());
-    app.use(morgan("dev"));
-    apollo.applyMiddleware({ app });
+    /* app.use(morgan("combined")); */
     app.use("/static", express.static("uploads"));
+    apollo.applyMiddleware({ app });
 
     await new Promise(r => httpServer.listen({ port: PORT }, r));
     console.log(`Server is Ready at http://localhost:${PORT}${apollo.graphqlPath}`);

@@ -7,7 +7,7 @@ export default {
     Mutation: {
         uploadPhoto: protectResolver(async (_, { file, caption }, { loggedInUser }) => {
             let hashtagObj = [];
-            
+
             /* Parse Caption and Get or Create Hashtags */
             if (caption) {
                 hashtagObj = extractHashtags(caption);
