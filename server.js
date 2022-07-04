@@ -10,7 +10,7 @@ require('dotenv').config();
 import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import express from 'express';
-import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress.js";
+import { graphqlUploadExpress } from "graphql-upload";
 import { createServer } from 'http';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
@@ -115,8 +115,10 @@ const startServer = async () => {
 
     app.use(graphqlUploadExpress());
     /* app.use(morgan("combined")); */
-    app.use("/static", express.static("uploads"));
     apollo.applyMiddleware({ app });
+    
+    /* Express Static: http://expressjs.com/ko/starter/static-files.html */
+    app.use("/static", express.static("uploads"));
 
     await new Promise(r => httpServer.listen({ port: PORT }, r));
     console.log(`Server is Ready at http://localhost:${PORT}${apollo.graphqlPath}`);
@@ -127,3 +129,13 @@ startServer();
 /* server.listen(PORT).then(() => {
     console.log(`Server is Ready at http://localhost:${PORT}`);
 }); */
+
+/* File Upload: Multipart Request (Not Working) -> Signed URL */
+/* - Give the Client a Temporary URL for Uploading a File Directly (Bypass the GraphQL Server) */
+/* - Scalability (Don't Use Multipart Upload Requests in a Real Project) */
+/* - Doc (Official): https://www.apollographql.com/blog/backend/file-uploads/file-upload-best-practices */
+/* - Doc (GraphQL S3): https://github.com/graphql-services/graphql-files-s3 */
+/* - ENG 1: https://wundergraph.com/blog/graphql_file_uploads_evaluating_the_5_most_common_approaches#combining-a-graphql-api-with-a-dedicated-s3-storage-api */
+/* - ENG 2: https://stackoverflow.com/questions/69012648/use-pre-signed-urls-to-upload-files-to-amazon-s3-hasura-actions-reacjs */
+/* - KOR 1: https://velog.io/@mimi0905/Presigned-URL%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-S3%EB%A1%9C-%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C */
+/* - KOR 2: https://velog.io/@godkimchichi/AWS-S3-presigned-url%EB%A1%9C-%EC%97%85%EB%A1%9C%EB%93%9C%EC%8B%9C-%ED%8C%8C%EC%9D%BC%EC%9D%B4-%EA%B9%A8%EC%A7%88-%EB%95%8C */

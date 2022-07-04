@@ -5,7 +5,7 @@ import { protectResolver } from "../users.utils";
 import { uploadToS3 } from "../../shared/shared.utils";
 
 /* Modify package.json Before Using graphql-upload (https://stackoverflow.com/questions/72361047/error-no-exports-main-defined-in-graphql-upload-package-json) */
-import GraphQLUpload from "graphql-upload/GraphQLUpload.js";
+import { GraphQLUpload } from "graphql-upload";
 
 const editProfile = async (_, { firstName, lastName, username, email, password: newPassword, bio, avatar }, { loggedInUser }) => {    
     let avatarURL = null;

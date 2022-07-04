@@ -13,7 +13,7 @@ export const uploadToS3 = async (file, userID, folderName) => {
     const newFilename = `${folderName}/${userID}-${Date.now()}-${filename}`;
     const { Location } = await new AWS.S3()
         .upload({
-            Bucket: "instagram-uploads",
+            Bucket: "kalph13-instagram-uploads",
             Key: newFilename,
             ACL: "public-read",
             Body: readStream
