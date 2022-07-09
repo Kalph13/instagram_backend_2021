@@ -4,6 +4,7 @@ import { protectResolver } from "../../users/users.utils";
 export default {
     Query: {
         seeRoom: protectResolver(async (_, { id }, { loggedInUser }) => {
+            console.log("------ SeeRoom Called ------ id:", loggedInUser.username);
             return await client.room.findFirst({
                 where: {
                     id,

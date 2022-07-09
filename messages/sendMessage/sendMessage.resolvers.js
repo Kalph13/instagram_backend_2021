@@ -70,7 +70,8 @@ export default {
                 }
             });
 
-            console.log("newMessage: ", newMessage);
+            console.log("------ SendMessage Called ------ id:", loggedInUser.username)
+            console.log("newMessage: ", newMessage.payload);
 
             /* Publishing Events: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#publishing-an-event */
             pubsub.publish(NEW_MESSAGE, { 
@@ -81,7 +82,7 @@ export default {
 
             return {
                 sendMessageSucceed: true,
-                sendMassageID: newMessage.id
+                sendMessageID: newMessage.id
             };
         })
     }
