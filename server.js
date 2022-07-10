@@ -12,12 +12,18 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import express from 'express';
 import { graphqlUploadExpress } from "graphql-upload";
 import { createServer } from 'http';
-import { WebSocketServer } from 'ws';
-import { useServer } from 'graphql-ws/lib/use/ws';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 
+/* Replaced by graphql-ws */
+/* Subscription w/subscriptions-transport-ws: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#switching-from-subscriptions-transport-ws */
+/* import { SubscriptionServer } from 'subscriptions-transport-ws'; */
+
+/* Subscription in Apollo 3 (Requires Apollo Client > v3.5.10) */
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+
 /* Morgan Logger: https://www.npmjs.com/package/morgan */
-import morgan from 'morgan';
+/* import morgan from 'morgan'; */
 
 import { typeDefs, resolvers } from './schema';
 import { getUser } from './users/users.utils';

@@ -8,7 +8,7 @@ export default {
     Subscription: {
         roomUpdate: {
             subscribe: async (root, arg, context, info) => {
-                console.log("------ RoomUpdate Called ------");
+                console.log("------ RoomUpdate Called ------ id:", context.loggedInUser.username);
                 const checkRoom = await client.room.findFirst({
                     where: {
                         id: arg.id,
