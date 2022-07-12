@@ -290,11 +290,11 @@ var startServer = /*#__PURE__*/function () {
             app.use("/static", _express["default"]["static"]("uploads"));
 
             if (process.env.NODE_ENV === "production") {
-              app.use(_express["default"]["static"]("client/build"));
+              app.use(_express["default"]["static"]("build"));
             }
 
             app.get(/.*/, function (req, res) {
-              res.sendFile(__dirname + "/client/build/server.js");
+              res.sendFile(__dirname + "/build/server.js");
             });
             _context9.next = 14;
             return new Promise(function (r) {

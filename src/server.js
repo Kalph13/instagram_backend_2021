@@ -131,11 +131,11 @@ const startServer = async () => {
     app.use("/static", express.static("uploads"));
 
     if (process.env.NODE_ENV === "production") {
-        app.use(express.static("client/build"));
+        app.use(express.static("build"));
     }
 
     app.get(/.*/, (req, res) => {
-        res.sendFile(__dirname + "/client/build/server.js");
+        res.sendFile(__dirname + "/build/server.js");
     });
 
     await new Promise(r => {
