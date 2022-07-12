@@ -57,7 +57,7 @@ var schema = (0, _schema.makeExecutableSchema)({
 
 var startServer = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee7() {
-    var app, httpServer, wsServer, serverCleanup, apollo;
+    var app, httpServer, wsServer, serverCleanup, apollo, result;
     return _regenerator["default"].wrap(function _callee7$(_context9) {
       while (1) {
         switch (_context9.prev = _context9.next) {
@@ -290,15 +290,17 @@ var startServer = /*#__PURE__*/function () {
             app.use("/static", _express["default"]["static"]("uploads"));
             _context9.next = 12;
             return new Promise(function (r) {
-              return httpServer.listen({
+              httpServer.listen({
                 port: PORT
               }, r);
             });
 
           case 12:
+            result = _context9.sent;
+            console.log(result);
             console.log("Server is Ready at http://localhost:".concat(PORT).concat(apollo.graphqlPath));
 
-          case 13:
+          case 15:
           case "end":
             return _context9.stop();
         }
