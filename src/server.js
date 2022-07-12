@@ -54,9 +54,9 @@ const startServer = async () => {
                 // console.log("Subscription Context", ctx);
                 // console.log("Subscription Message", msg);
                 // console.log("Subscription Arguments", args);
-                console.log("------ Subscription Context ------ userToken: ", userToken);
+                console.log("------ Subscription Context ------ userToken:", userToken);
 
-                if (!userToken)/* (ctx.connectionParams.Authorization) */ {
+                if (userToken)/* (ctx.connectionParams.Authorization) */ {
                     return {
                         loggedInUser: await getUser(userToken) /* (ctx.connectionParams.Authorization) */
                     };
@@ -69,7 +69,7 @@ const startServer = async () => {
             /* onConnect and onDisconnect: Configure Subscription Server's Behavior When a Client Connects or Disconnects */
             /* - Doc: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#onconnect-and-ondisconnect */
             onConnect: async (ctx) => {       
-                console.log("------ Subscription onConnect ------ userToken: ", userToken);
+                console.log("------ Subscription onConnect ------ userToken:", userToken);
                 
                 if (!userToken) /* (!ctx.connectionParams.Authorization) */{
                     throw new Error("You Can't Connect");                 

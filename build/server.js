@@ -84,9 +84,9 @@ var startServer = /*#__PURE__*/function () {
                           // console.log("Subscription Context", ctx);
                           // console.log("Subscription Message", msg);
                           // console.log("Subscription Arguments", args);
-                          console.log("------ Subscription Context ------ userToken: ", userToken);
+                          console.log("------ Subscription Context ------ userToken:", userToken);
 
-                          if (userToken) {
+                          if (!userToken) {
                             _context2.next = 6;
                             break;
                           }
@@ -129,7 +129,7 @@ var startServer = /*#__PURE__*/function () {
                     while (1) {
                       switch (_context3.prev = _context3.next) {
                         case 0:
-                          console.log("------ Subscription onConnect ------ userToken: ", userToken);
+                          console.log("------ Subscription onConnect ------ userToken:", userToken);
 
                           if (userToken) {
                             _context3.next = 3;
