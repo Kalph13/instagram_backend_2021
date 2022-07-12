@@ -130,14 +130,6 @@ const startServer = async () => {
     /* Express Static: http://expressjs.com/ko/starter/static-files.html */
     app.use("/static", express.static("uploads"));
 
-    if (process.env.NODE_ENV === "production") {
-        app.use(express.static("build"));
-    }
-
-    app.get(/.*/, (req, res) => {
-        res.sendFile(__dirname + "/build/server.js");
-    });
-
     await new Promise(r => {
         httpServer.listen({ port: PORT }, r);
     });

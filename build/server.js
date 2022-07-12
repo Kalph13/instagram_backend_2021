@@ -288,25 +288,17 @@ var startServer = /*#__PURE__*/function () {
             /* Express Static: http://expressjs.com/ko/starter/static-files.html */
 
             app.use("/static", _express["default"]["static"]("uploads"));
-
-            if (process.env.NODE_ENV === "production") {
-              app.use(_express["default"]["static"]("build"));
-            }
-
-            app.get(/.*/, function (req, res) {
-              res.sendFile(__dirname + "/build/server.js");
-            });
-            _context9.next = 14;
+            _context9.next = 12;
             return new Promise(function (r) {
               httpServer.listen({
                 port: PORT
               }, r);
             });
 
-          case 14:
+          case 12:
             console.log("Server is Ready at http://localhost:".concat(PORT).concat(apollo.graphqlPath));
 
-          case 15:
+          case 13:
           case "end":
             return _context9.stop();
         }
