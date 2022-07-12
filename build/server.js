@@ -197,8 +197,7 @@ var startServer = /*#__PURE__*/function () {
               /* GraphQL Introspection: Information About the Underlying Schema (A Discovery and Diagnostic Tool in Development Phase, Not in Production Phase) */
 
               /* - Ref: https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/ */
-
-              /* introspection: true, */
+              introspection: true,
 
               /* Context to GraphQL Resolvers */
               context: function () {

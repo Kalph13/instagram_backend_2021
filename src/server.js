@@ -98,7 +98,7 @@ const startServer = async () => {
         /* playground: true, */
         /* GraphQL Introspection: Information About the Underlying Schema (A Discovery and Diagnostic Tool in Development Phase, Not in Production Phase) */
         /* - Ref: https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/ */
-        /* introspection: true, */
+        introspection: true,
         /* Context to GraphQL Resolvers */
         context: async ({ req }) => {
             /* Authentication (Server): https://www.apollographql.com/docs/apollo-server/security/authentication */
