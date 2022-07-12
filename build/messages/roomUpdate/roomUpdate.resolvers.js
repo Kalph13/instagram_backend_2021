@@ -30,8 +30,12 @@ var _default = {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  console.log("------ RoomUpdate Called ------ id:", context.loggedInUser);
-                  _context2.next = 3;
+                  console.log("------ RoomUpdate Called ------ root:", root);
+                  console.log("------ RoomUpdate Called ------ arg:", arg);
+                  console.log("------ RoomUpdate Called ------ context:", context);
+                  console.log("------ RoomUpdate Called ------ info:", info);
+                  console.log("------ RoomUpdate Called ------ id:", context.loggedInUser.username);
+                  _context2.next = 7;
                   return _client["default"].room.findFirst({
                     where: {
                       id: arg.id,
@@ -46,17 +50,17 @@ var _default = {
                     }
                   });
 
-                case 3:
+                case 7:
                   checkRoom = _context2.sent;
 
                   if (checkRoom) {
-                    _context2.next = 6;
+                    _context2.next = 10;
                     break;
                   }
 
                   throw new Error("You Shall Not See This");
 
-                case 6:
+                case 10:
                   return _context2.abrupt("return", (0, _graphqlSubscriptions.withFilter)(function () {
                     return _pubsub["default"].asyncIterator(_constants.NEW_MESSAGE);
                   }, /*#__PURE__*/function () {
@@ -116,7 +120,7 @@ var _default = {
                     };
                   }())(root, arg, context, info));
 
-                case 7:
+                case 11:
                 case "end":
                   return _context2.stop();
               }
