@@ -55,9 +55,9 @@ const startServer = async () => {
                 // console.log("Subscription Message", msg);
                 // console.log("Subscription Arguments", args);
 
-                if (ctx.connectionParams.Authorization) {
+                if (!userToken)/* (ctx.connectionParams.Authorization) */ {
                     return {
-                        loggedInUser: await getUser(ctx.connectionParams.Authorization)
+                        loggedInUser: await getUser(userToken) /* (ctx.connectionParams.Authorization) */
                     };
                 }
 

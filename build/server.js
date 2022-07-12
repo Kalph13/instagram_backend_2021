@@ -81,13 +81,13 @@ var startServer = /*#__PURE__*/function () {
                     while (1) {
                       switch (_context2.prev = _context2.next) {
                         case 0:
-                          if (!ctx.connectionParams.Authorization) {
+                          if (userToken) {
                             _context2.next = 5;
                             break;
                           }
 
                           _context2.next = 3;
-                          return (0, _users.getUser)(ctx.connectionParams.Authorization);
+                          return (0, _users.getUser)(userToken);
 
                         case 3:
                           _context2.t0 = _context2.sent;
