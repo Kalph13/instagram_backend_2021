@@ -81,26 +81,31 @@ var startServer = /*#__PURE__*/function () {
                     while (1) {
                       switch (_context2.prev = _context2.next) {
                         case 0:
+                          // console.log("Subscription Context", ctx);
+                          // console.log("Subscription Message", msg);
+                          // console.log("Subscription Arguments", args);
+                          console.log("------ Subscription Context ------ userToken: ", userToken);
+
                           if (userToken) {
-                            _context2.next = 5;
+                            _context2.next = 6;
                             break;
                           }
 
-                          _context2.next = 3;
+                          _context2.next = 4;
                           return (0, _users.getUser)(userToken);
 
-                        case 3:
+                        case 4:
                           _context2.t0 = _context2.sent;
                           return _context2.abrupt("return", {
                             loggedInUser: _context2.t0
                           });
 
-                        case 5:
+                        case 6:
                           return _context2.abrupt("return", {
                             loggedInUser: null
                           });
 
-                        case 6:
+                        case 7:
                         case "end":
                           return _context2.stop();
                       }
@@ -124,7 +129,7 @@ var startServer = /*#__PURE__*/function () {
                     while (1) {
                       switch (_context3.prev = _context3.next) {
                         case 0:
-                          console.log("Subscription Debug", userToken);
+                          console.log("------ Subscription onConnect ------ userToken: ", userToken);
 
                           if (userToken) {
                             _context3.next = 3;
