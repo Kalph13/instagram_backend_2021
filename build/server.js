@@ -123,25 +123,27 @@ var startServer = /*#__PURE__*/function () {
                     while (1) {
                       switch (_context3.prev = _context3.next) {
                         case 0:
+                          console.log("Subscription Debug", ctx.connectionParams);
+
                           if (ctx.connectionParams.Authorization) {
-                            _context3.next = 2;
+                            _context3.next = 3;
                             break;
                           }
 
                           throw new Error("You Can't Connect");
 
-                        case 2:
+                        case 3:
                           console.log("Subscription Connected");
-                          _context3.next = 5;
+                          _context3.next = 6;
                           return (0, _users.getUser)(ctx.connectionParams.Authorization);
 
-                        case 5:
+                        case 6:
                           _context3.t0 = _context3.sent;
                           return _context3.abrupt("return", {
                             loggedInUser: _context3.t0
                           });
 
-                        case 7:
+                        case 8:
                         case "end":
                           return _context3.stop();
                       }
@@ -326,7 +328,9 @@ startServer();
 
 /* - Apollo GraphQL <> Heroku: https://www.apollographql.com/docs/apollo-server/deployment/heroku/ */
 
-/* File Upload: Multipart Request (Not Working) -> Signed URL */
+/* - GraphQL URL: https://circleci.com/blog/continuous-deployment-of-an-express-graphql-server-to-heroku/ */
+
+/* File Upload: Multipart Request -> Signed URL */
 
 /* - Give the Client a Temporary URL for Uploading a File Directly (Bypass the GraphQL Server) */
 

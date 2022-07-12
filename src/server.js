@@ -66,7 +66,9 @@ const startServer = async () => {
             }, 
             /* onConnect and onDisconnect: Configure Subscription Server's Behavior When a Client Connects or Disconnects */
             /* - Doc: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#onconnect-and-ondisconnect */
-            onConnect: async (ctx) => {                
+            onConnect: async (ctx) => {       
+                console.log("Subscription Debug", ctx.connectionParams);
+                
                 if (!ctx.connectionParams.Authorization) {
                     throw new Error("You Can't Connect");                 
                 }
@@ -148,8 +150,9 @@ startServer();
 /* - Environment: https://devcenter.heroku.com/articles/config-vars */
 /* - Postgres: https://devcenter.heroku.com/articles/heroku-postgresql#set-up-postgres-on-windows */
 /* - Apollo GraphQL <> Heroku: https://www.apollographql.com/docs/apollo-server/deployment/heroku/ */
+/* - GraphQL URL: https://circleci.com/blog/continuous-deployment-of-an-express-graphql-server-to-heroku/ */
 
-/* File Upload: Multipart Request (Not Working) -> Signed URL */
+/* File Upload: Multipart Request -> Signed URL */
 /* - Give the Client a Temporary URL for Uploading a File Directly (Bypass the GraphQL Server) */
 /* - Scalability (Don't Use Multipart Upload Requests in a Real Project) */
 /* - Doc (Official): https://www.apollographql.com/blog/backend/file-uploads/file-upload-best-practices */
