@@ -57,7 +57,7 @@ var schema = (0, _schema.makeExecutableSchema)({
 
 var startServer = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee7() {
-    var app, httpServer, wsServer, serverCleanup, apollo, result;
+    var app, httpServer, wsServer, serverCleanup, apollo;
     return _regenerator["default"].wrap(function _callee7$(_context9) {
       while (1) {
         switch (_context9.prev = _context9.next) {
@@ -288,19 +288,22 @@ var startServer = /*#__PURE__*/function () {
             /* Express Static: http://expressjs.com/ko/starter/static-files.html */
 
             app.use("/static", _express["default"]["static"]("uploads"));
-            _context9.next = 12;
+
+            if (process.env.NODE_ENV === "production") {
+              app.use(_express["default"]["static"]("client/build"));
+            }
+
+            _context9.next = 13;
             return new Promise(function (r) {
               httpServer.listen({
                 port: PORT
               }, r);
             });
 
-          case 12:
-            result = _context9.sent;
-            console.log(result);
+          case 13:
             console.log("Server is Ready at http://localhost:".concat(PORT).concat(apollo.graphqlPath));
 
-          case 15:
+          case 14:
           case "end":
             return _context9.stop();
         }
@@ -317,6 +320,16 @@ startServer();
 /* server.listen(PORT).then(() => {
     console.log(`Server is Ready at http://localhost:${PORT}`);
 }); */
+
+/* Heroku */
+
+/* - Getting Started: https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true */
+
+/* - Environment: https://devcenter.heroku.com/articles/config-vars */
+
+/* - Postgres: https://devcenter.heroku.com/articles/heroku-postgresql#set-up-postgres-on-windows */
+
+/* - Apollo GraphQL <> Heroku: https://www.apollographql.com/docs/apollo-server/deployment/heroku/ */
 
 /* File Upload: Multipart Request (Not Working) -> Signed URL */
 
