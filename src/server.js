@@ -32,6 +32,7 @@ import { getUser } from './users/users.utils';
 /* Ref: https://stackoverflow.com/questions/52666152/process-env-port-is-undefined-in-linuxcloud-environment */
 const PORT = process.env.PORT;
 const schema = makeExecutableSchema({ typeDefs, resolvers });
+let userInfo;
 
 /* GraphQL Upload in Apollo v3: https://www.apollographql.com/docs/apollo-server/data/file-uploads */
 /* Enabling Subscription: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#enabling-subscriptions */
@@ -67,16 +68,16 @@ const startServer = async () => {
             /* onConnect and onDisconnect: Configure Subscription Server's Behavior When a Client Connects or Disconnects */
             /* - Doc: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#onconnect-and-ondisconnect */
             onConnect: async (ctx) => {       
-                console.log("Subscription Debug", ctx.connectionParams);
+                console.log("Subscription Debug", userInfo);
                 
-                if (!ctx.connectionParams.Authorization) {
+                if (!userInfo) /* (!ctx.connectionParams.Authorization) */{
                     throw new Error("You Can't Connect");                 
                 }
 
                 console.log("Subscription Connected");
 
                 return {
-                    loggedInUser: await getUser(ctx.connectionParams.Authorization)
+                    loggedInUser: await getUser(userInfo)/* (ctx.connectionParams.Authorization) */
                 };
             },
             onDisconnect: async (ctx) => {
@@ -100,6 +101,8 @@ const startServer = async () => {
             /* Authentication (Client): https://www.apollographql.com/docs/react/networking/authentication/ */
             /* How to Set 'req.headers.authorization': Apollo Studio > Explorer > Shared Setting > Connection Setting > Shared headers > Authorization */
             if (req) {
+                userInfo = await getUser(req.headers.authorization);
+                
                 return {
                     loggedInUser: await getUser(req.headers.authorization)
                 };
