@@ -134,6 +134,10 @@ const startServer = async () => {
         app.use(express.static("client/build"));
     }
 
+    app.get(/.*/, (req, res) => {
+        res.sendFile(__dirname + "/client/build/server.js");
+    });
+
     await new Promise(r => {
         httpServer.listen({ port: PORT }, r);
     });
