@@ -49,7 +49,7 @@ var schema = (0, _schema.makeExecutableSchema)({
   typeDefs: _schema2.typeDefs,
   resolvers: _schema2.resolvers
 });
-var userInfo;
+var userToken;
 /* GraphQL Upload in Apollo v3: https://www.apollographql.com/docs/apollo-server/data/file-uploads */
 
 /* Enabling Subscription: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#enabling-subscriptions */
@@ -124,9 +124,9 @@ var startServer = /*#__PURE__*/function () {
                     while (1) {
                       switch (_context3.prev = _context3.next) {
                         case 0:
-                          console.log("Subscription Debug", userInfo);
+                          console.log("Subscription Debug", userToken);
 
-                          if (userInfo) {
+                          if (userToken) {
                             _context3.next = 3;
                             break;
                           }
@@ -136,7 +136,7 @@ var startServer = /*#__PURE__*/function () {
                         case 3:
                           console.log("Subscription Connected");
                           _context3.next = 6;
-                          return (0, _users.getUser)(userInfo);
+                          return (0, _users.getUser)(userToken);
 
                         case 6:
                           _context3.t0 = _context3.sent;
@@ -206,25 +206,21 @@ var startServer = /*#__PURE__*/function () {
                           req = _ref2.req;
 
                           if (!req) {
-                            _context6.next = 9;
+                            _context6.next = 7;
                             break;
                           }
 
-                          _context6.next = 4;
+                          userToken = req.headers.authorization;
+                          _context6.next = 5;
                           return (0, _users.getUser)(req.headers.authorization);
 
-                        case 4:
-                          userInfo = _context6.sent;
-                          _context6.next = 7;
-                          return (0, _users.getUser)(req.headers.authorization);
-
-                        case 7:
+                        case 5:
                           _context6.t0 = _context6.sent;
                           return _context6.abrupt("return", {
                             loggedInUser: _context6.t0
                           });
 
-                        case 9:
+                        case 7:
                         case "end":
                           return _context6.stop();
                       }
