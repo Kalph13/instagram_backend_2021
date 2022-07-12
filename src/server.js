@@ -130,7 +130,7 @@ const startServer = async () => {
     /* Express Static: http://expressjs.com/ko/starter/static-files.html */
     app.use("/static", express.static("uploads"));
 
-    server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+    httpServer.listen({ port: PORT }).then(({ url }) => {
         console.log(`
             🚀  Server is ready at ${url}
         `);
