@@ -293,17 +293,20 @@ var startServer = /*#__PURE__*/function () {
               app.use(_express["default"]["static"]("client/build"));
             }
 
-            _context9.next = 13;
+            app.get(/.*/, function (req, res) {
+              res.sendFile(__dirname + "/client/build/server.js");
+            });
+            _context9.next = 14;
             return new Promise(function (r) {
               httpServer.listen({
                 port: PORT
               }, r);
             });
 
-          case 13:
+          case 14:
             console.log("Server is Ready at http://localhost:".concat(PORT).concat(apollo.graphqlPath));
 
-          case 14:
+          case 15:
           case "end":
             return _context9.stop();
         }
