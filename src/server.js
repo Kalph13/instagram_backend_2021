@@ -137,7 +137,7 @@ const startServer = async () => {
     });
 
     /* await new Promise(r => httpServer.listen({ port: PORT }, r)); */
-    /* console.log(`Server is Ready at http://localhost:${PORT}${apollo.graphqlPath}`); 
+    /* console.log(`Server is Ready at http://localhost:${PORT}${apollo.graphqlPath}`); */
 }
 
 startServer();
