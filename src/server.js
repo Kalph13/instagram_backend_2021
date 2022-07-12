@@ -149,5 +149,3 @@ startServer();
 /* - ENG 2: https://stackoverflow.com/questions/69012648/use-pre-signed-urls-to-upload-files-to-amazon-s3-hasura-actions-reacjs */
 /* - KOR 1: https://velog.io/@mimi0905/Presigned-URL%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-S3%EB%A1%9C-%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C */
 /* - KOR 2: https://velog.io/@godkimchichi/AWS-S3-presigned-url%EB%A1%9C-%EC%97%85%EB%A1%9C%EB%93%9C%EC%8B%9C-%ED%8C%8C%EC%9D%BC%EC%9D%B4-%EA%B9%A8%EC%A7%88-%EB%95%8C */
-
-/* Heroku */
