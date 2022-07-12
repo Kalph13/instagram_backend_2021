@@ -130,8 +130,14 @@ const startServer = async () => {
     /* Express Static: http://expressjs.com/ko/starter/static-files.html */
     app.use("/static", express.static("uploads"));
 
-    await new Promise(r => httpServer.listen({ port: PORT }, r));
-    console.log(`Server is Ready at http://localhost:${PORT}${apollo.graphqlPath}`);
+    server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+        console.log(`
+            🚀  Server is ready at ${url}
+        `);
+    });
+
+    /* await new Promise(r => httpServer.listen({ port: PORT }, r)); */
+    /* console.log(`Server is Ready at http://localhost:${PORT}${apollo.graphqlPath}`); 
 }
 
 startServer();
