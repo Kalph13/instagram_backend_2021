@@ -239,7 +239,7 @@ var startServer = /*#__PURE__*/function () {
 
                 return context;
               }(),
-              plugins: [(0, _apolloServerCore.ApolloServerPluginDrainHttpServer)({
+              plugins: [(0, _apolloServerCore.ApolloServerPluginLandingPageGraphQLPlayground)(), (0, _apolloServerCore.ApolloServerPluginDrainHttpServer)({
                 httpServer: httpServer
               }), {
                 serverWillStart: function serverWillStart() {

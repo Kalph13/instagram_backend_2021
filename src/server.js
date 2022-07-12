@@ -22,6 +22,9 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 
+/* Apollo Playground in Heroku: https://www.apollographql.com/docs/apollo-server/api/plugin/landing-pages/#graphql-playground-landing-page */
+import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+
 /* Morgan Logger: https://www.npmjs.com/package/morgan */
 import morgan from 'morgan';
 
@@ -110,6 +113,7 @@ const startServer = async () => {
             }
         },
         plugins: [
+            ApolloServerPluginLandingPageGraphQLPlayground(),
             ApolloServerPluginDrainHttpServer({ httpServer }),
             {
                 async serverWillStart() {
