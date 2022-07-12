@@ -130,10 +130,14 @@ const startServer = async () => {
     /* Express Static: http://expressjs.com/ko/starter/static-files.html */
     app.use("/static", express.static("uploads"));
 
+    if (process.env.NODE_ENV === "production") {
+        app.use(express.static("client/build"));
+    }
+
     await new Promise(r => {
         httpServer.listen({ port: PORT }, r);
     });
-    
+
     console.log(`Server is Ready at http://localhost:${PORT}${apollo.graphqlPath}`);
 }
 
@@ -142,6 +146,12 @@ startServer();
 /* server.listen(PORT).then(() => {
     console.log(`Server is Ready at http://localhost:${PORT}`);
 }); */
+
+/* Heroku */
+/* - Getting Started: https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true */
+/* - Environment: https://devcenter.heroku.com/articles/config-vars */
+/* - Postgres: https://devcenter.heroku.com/articles/heroku-postgresql#set-up-postgres-on-windows */
+/* - Apollo GraphQL <> Heroku: https://www.apollographql.com/docs/apollo-server/deployment/heroku/ */
 
 /* File Upload: Multipart Request (Not Working) -> Signed URL */
 /* - Give the Client a Temporary URL for Uploading a File Directly (Bypass the GraphQL Server) */
