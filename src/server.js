@@ -7,23 +7,23 @@
 require('dotenv').config();
 
 /* GraphQL Upload in Apollo v3: https://www.apollographql.com/docs/apollo-server/data/file-uploads */
-import { ApolloServer } from 'apollo-server-express';
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
 import { graphqlUploadExpress } from "graphql-upload";
-import { createServer } from 'http';
-import { makeExecutableSchema } from '@graphql-tools/schema';
 
 /* Replaced by graphql-ws */
 /* Subscription w/subscriptions-transport-ws: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#switching-from-subscriptions-transport-ws */
 /* import { SubscriptionServer } from 'subscriptions-transport-ws'; */
 
-/* Subscription in Apollo 3 (Requires Apollo Client > v3.5.10) */
+/* Subscription in Apollo 3 w/graphql-ws (Requires Apollo Client > v3.5.10) */
+import { createServer } from 'http';
 import { WebSocketServer } from 'ws';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { useServer } from 'graphql-ws/lib/use/ws';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 
 /* Morgan Logger: https://www.npmjs.com/package/morgan */
-/* import morgan from 'morgan'; */
+import morgan from 'morgan';
 
 import { typeDefs, resolvers } from './schema';
 import { getUser } from './users/users.utils';
@@ -50,6 +50,10 @@ const startServer = async () => {
             schema,
             /* Context to Subscription, Not GraphQL Resolvers */
             context: async (ctx, msg, args) => {
+                // console.log("Subscription Context", ctx);
+                // console.log("Subscription Message", msg);
+                // console.log("Subscription Arguments", args);
+
                 if (ctx.connectionParams.Authorization) {
                     return {
                         loggedInUser: await getUser(ctx.connectionParams.Authorization)
@@ -62,9 +66,7 @@ const startServer = async () => {
             }, 
             /* onConnect and onDisconnect: Configure Subscription Server's Behavior When a Client Connects or Disconnects */
             /* - Doc: https://www.apollographql.com/docs/apollo-server/data/subscriptions/#onconnect-and-ondisconnect */
-            onConnect: async (ctx) => {
-                console.log("Login Token:", ctx.connectionParams.Authorization);
-                
+            onConnect: async (ctx) => {                
                 if (!ctx.connectionParams.Authorization) {
                     throw new Error("You Can't Connect");                 
                 }
@@ -85,6 +87,11 @@ const startServer = async () => {
     const apollo = new ApolloServer({
         resolvers,
         typeDefs,
+        /* GraphQL Playground is Deprecated in Apollo 3: https://www.apollographql.com/docs/apollo-server/migration/#graphql-playground */
+        /* playground: true, */
+        /* GraphQL Introspection: Information About the Underlying Schema (A Discovery and Diagnostic Tool in Development Phase, Not in Production Phase) */
+        /* - Ref: https://www.apollographql.com/blog/graphql/security/why-you-should-disable-graphql-introspection-in-production/ */
+        /* introspection: true, */
         /* Context to GraphQL Resolvers */
         context: async ({ req }) => {
             /* Authentication (Server): https://www.apollographql.com/docs/apollo-server/security/authentication */
